@@ -15,12 +15,14 @@ public class GroupBoardDTO {
     private Long group_id;
     private Long user_id;
 
-    private UserGroupJoinEntity groupUser;
+    private UserEntity user;
+    private GroupEntity group;
 
     public GroupBoardEntity toEntity(){
         return GroupBoardEntity.builder()
                 .title(title)
-                .groupUser(groupUser)
+                .user(user)
+                .group(group)
                 .content(content)
                 .build();
     }

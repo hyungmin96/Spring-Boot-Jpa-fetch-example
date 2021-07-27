@@ -10,7 +10,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 @Table(name = "tbl_user_profile")
-public class UserProfileEntity {
+public class UserProfileEntity extends BaseTimeEntity {
 
     @Id @GeneratedValue
     @Column(name = "profile_id")

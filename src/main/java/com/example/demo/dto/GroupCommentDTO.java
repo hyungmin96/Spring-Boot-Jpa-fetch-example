@@ -1,8 +1,6 @@
 package com.example.demo.dto;
 
-import com.example.demo.entities.GroupBoardCommentEntity;
-import com.example.demo.entities.GroupBoardEntity;
-import com.example.demo.entities.UserEntity;
+import com.example.demo.entities.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,13 +12,13 @@ public class GroupCommentDTO {
     private Long user_id;
 
     private UserEntity user;
-    private GroupBoardEntity board;
+    private GroupEntity group;
 
     public GroupBoardCommentEntity toEntity(){
         return GroupBoardCommentEntity.builder()
                 .comment(comment)
-                .board(board)
-                .user(user)
+                .group(group)
+                .comment(comment)
                 .build();
     }
 

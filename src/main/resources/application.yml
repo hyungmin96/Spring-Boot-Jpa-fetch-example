@@ -37,9 +37,11 @@ spring:
 
 
   jpa:
+    database: mysql
+    datase-platform: me.dico.infra.config.MysqlCustomDialect
     open-in-view: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
       use-new-id-generator-mappings: false

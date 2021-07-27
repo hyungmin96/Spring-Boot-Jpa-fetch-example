@@ -24,7 +24,13 @@ public class UserEntity extends BaseTimeEntity {
     @Column(name = "user_name")
     private String username;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<GroupBoardEntity> boards;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<GroupBoardCommentEntity> comments;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "profile_id")
     private UserProfileEntity profile;
 

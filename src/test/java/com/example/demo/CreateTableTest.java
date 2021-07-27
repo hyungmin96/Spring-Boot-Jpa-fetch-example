@@ -1,12 +1,11 @@
 package com.example.demo;
 
-import com.example.demo.dto.GroupDTO;
-import com.example.demo.dto.ProfileDTO;
-import com.example.demo.dto.UserDTO;
-import com.example.demo.dto.UserGroupJoinDTO;
+import com.example.demo.dto.*;
 import com.example.demo.entities.GroupEntity;
 import com.example.demo.entities.UserEntity;
+import com.example.demo.entities.UserGroupJoinEntity;
 import com.example.demo.entities.UserProfileEntity;
+import com.example.demo.repositories.GroupBoardRepository;
 import com.example.demo.repositories.GroupRepository;
 import com.example.demo.repositories.UserGroupJoinRepository;
 import com.example.demo.repositories.UserRepository;
@@ -27,14 +26,12 @@ import java.util.List;
 @TestPropertySource("classpath:application.yml")
 public class CreateTableTest {
 
-    @Autowired
-    private UserRepository userRepository;
+    @Autowired private UserRepository userRepository;
+    @Autowired private GroupRepository groupRepository;
+    @Autowired private UserGroupJoinRepository userGroupJoinRepository;
+    @Autowired private GroupBoardRepository groupBoardRepository;
 
-    @Autowired
-    private GroupRepository groupRepository;
-
-    @Autowired
-    private UserGroupJoinRepository userGroupJoinRepository;
+    private static final Logger log = LogManager.getLogger();
 
     @Test
     void 유저_와_프로필_생성(){
@@ -69,9 +66,11 @@ public class CreateTableTest {
 
     @Test
     void 조인테이블_생성(){
-        UserEntity userEntity = userRepository.getById(3L);
-        for(int i = 26; i < 30; i ++){
-            GroupEntity groupEntity = groupRepository.getById(4L);
+        for(int i = 1; i < 10; i ++){
+
+            UserEntity userEntity = userRepository.getById(Long.parseLong(i + ""));
+            GroupEntity groupEntity = groupRepository.getById(Long.parseLong(i + ""));
+
             UserGroupJoinDTO userGroupJoinDTO = new UserGroupJoinDTO();
             userGroupJoinDTO.setUser(userEntity);
             userGroupJoinDTO.setGroup(groupEntity);
@@ -82,6 +81,18 @@ public class CreateTableTest {
     @Test
     void 게시글_생성(){
 
-    }
+        UserEntity userEntity = userRepository.getById(3L);
+        GroupEntity groupEntity = groupRepository.getById(3L);
 
+        for(int i = 0; i < 23; i ++){
+            GroupBoardDTO groupBoardDTO = new GroupBoardDTO();
+            groupBoardDTO.setTitle("title " + i);
+            groupBoardDTO.setContent("subject " + i);
+            groupBoardDTO.setGroup_id(groupEntity.getId());
+            groupBoardDTO.setUser(userEntity);
+            groupBoardDTO.setGroup(groupEntity);
+
+            groupBoardRepository.save(groupBoardDTO.toEntity());
+        }
+    }
 }

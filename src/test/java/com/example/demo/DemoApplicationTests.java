@@ -3,17 +3,19 @@ package com.example.demo;
 import com.example.demo.dto.GroupDTO;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.dto.UserGroupJoinDTO;
+import com.example.demo.entities.GroupBoardEntity;
 import com.example.demo.entities.GroupEntity;
 import com.example.demo.entities.UserEntity;
-import com.example.demo.repositories.GroupRepository;
-import com.example.demo.repositories.UserGroupJoinRepository;
-import com.example.demo.repositories.UserRepository;
+import com.example.demo.entities.UserGroupJoinEntity;
+import com.example.demo.repositories.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,14 +27,11 @@ import java.util.List;
 @TestPropertySource("classpath:application.yml")
 public class DemoApplicationTests {
 
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private GroupRepository groupRepository;
-
-    @Autowired
-    private UserGroupJoinRepository userGroupJoinRepository;
+    @Autowired private UserRepository userRepository;
+    @Autowired private GroupRepository groupRepository;
+    @Autowired private UserGroupJoinRepository userGroupJoinRepository;
+    @Autowired private GroupBoardQueryRepository groupBoardQueryRepository;
+    @Autowired private GroupBoardRepository groupBoardRepository;
 
     private static final Logger log = LogManager.getLogger();
 
@@ -56,6 +55,26 @@ public class DemoApplicationTests {
 
         for(UserEntity item : list)
             log.info("value : " + item.getUsername());
-
     }
+
+    @Test
+    void 그룹_게시글_가져오기(){
+
+        GroupEntity groupEntity = groupRepository.getById(3L);
+        PageRequest request = PageRequest.of(0, 5, Sort.Direction.ASC, "id");
+
+        List<GroupBoardEntity> items = groupBoardRepository.findAllBygroup(groupEntity, request);
+
+        for(GroupBoardEntity item : items)
+            log.info("\nvalue : " + item.getTitle());
+    }
+
+    @Test
+    void Querydsl_게시물_가져오기(){
+        List<GroupBoardEntity> list = groupBoardQueryRepository.findByName("title 1");
+
+        for(GroupBoardEntity group : list)
+            log.info("\nvalue : " + group.getTitle() + "\n" + group.getUser().getId());
+    }
+
 }

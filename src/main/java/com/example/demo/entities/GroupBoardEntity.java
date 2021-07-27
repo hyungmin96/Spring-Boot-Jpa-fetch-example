@@ -24,8 +24,12 @@ public class GroupBoardEntity extends BaseTimeEntity{
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "group_user_id")
-    private UserGroupJoinEntity groupUser;
+    @JoinColumn(name = "group_no")
+    private GroupEntity group;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "group_board_writer")
+    private UserEntity user;
 
     @OneToMany(mappedBy = "board")
     private List<GroupBoardCommentEntity> comments;

@@ -24,7 +24,4 @@ public class UserGroupJoinEntity extends BaseTimeEntity{
     @JoinColumn(name = "group_table")
     private GroupEntity group;
 
-    @OneToMany(mappedBy = "groupUser")
-    private List<GroupBoardEntity> boards;
-
 }

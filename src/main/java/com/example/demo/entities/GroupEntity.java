@@ -20,4 +20,7 @@ public class GroupEntity {
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     private List<UserGroupJoinEntity> UserGroupJoin;
 
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
+    private List<GroupBoardEntity> boards;
+
 }

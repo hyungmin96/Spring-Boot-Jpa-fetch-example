@@ -18,7 +18,7 @@ public class GroupEntity {
     private String groupTitle;
 
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
-    private List<UserGroupJoinEntity> UserGroupJoin;
+    private List<GroupUserEntity> users;
 
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     private List<GroupBoardEntity> boards;

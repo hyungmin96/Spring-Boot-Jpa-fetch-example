@@ -26,5 +26,4 @@ public class GroupBoardQueryRepository{
                 .limit(15)
                 .fetch();
     }
-
 }

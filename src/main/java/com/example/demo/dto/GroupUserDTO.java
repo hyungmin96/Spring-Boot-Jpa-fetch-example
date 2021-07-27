@@ -1,20 +1,20 @@
 package com.example.demo.dto;
 
 import com.example.demo.entities.GroupEntity;
+import com.example.demo.entities.GroupUserEntity;
 import com.example.demo.entities.UserEntity;
-import com.example.demo.entities.UserGroupJoinEntity;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class UserGroupJoinDTO {
+public class GroupUserDTO {
 
-    private UserEntity user;
+    private Long userId;
     private GroupEntity group;
 
-    public UserGroupJoinEntity toEntity(){
-        return UserGroupJoinEntity.builder()
-                .user(user)
+    public GroupUserEntity toEntity(){
+        return GroupUserEntity.builder()
+                .userId(userId)
                 .group(group)
                 .build();
     }

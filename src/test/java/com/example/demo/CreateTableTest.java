@@ -2,13 +2,11 @@ package com.example.demo;
 
 import com.example.demo.dto.*;
 import com.example.demo.entities.GroupEntity;
+import com.example.demo.entities.GroupUserEntity;
 import com.example.demo.entities.UserEntity;
-import com.example.demo.entities.UserGroupJoinEntity;
 import com.example.demo.entities.UserProfileEntity;
-import com.example.demo.repositories.GroupBoardRepository;
-import com.example.demo.repositories.GroupRepository;
-import com.example.demo.repositories.UserGroupJoinRepository;
-import com.example.demo.repositories.UserRepository;
+import com.example.demo.repositories.*;
+import com.querydsl.core.Tuple;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;
@@ -17,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -28,8 +25,9 @@ public class CreateTableTest {
 
     @Autowired private UserRepository userRepository;
     @Autowired private GroupRepository groupRepository;
-    @Autowired private UserGroupJoinRepository userGroupJoinRepository;
     @Autowired private GroupBoardRepository groupBoardRepository;
+    @Autowired private GroupUserRepository groupUserRepository;
+    @Autowired private GroupUserQueryRepository groupUserQueryRepository;
 
     private static final Logger log = LogManager.getLogger();
 
@@ -56,7 +54,9 @@ public class CreateTableTest {
 
     @Test
     void 그룹생성(){
+        
         groupRepository.deleteAll();
+        
         for(int i = 1; i < 52; i ++){
             GroupDTO groupDTO = new GroupDTO();
             groupDTO.setTitle("test " + i);
@@ -65,17 +65,19 @@ public class CreateTableTest {
     }
 
     @Test
-    void 조인테이블_생성(){
-        for(int i = 1; i < 10; i ++){
+    void 그룹가입(){
 
-            UserEntity userEntity = userRepository.getById(Long.parseLong(i + ""));
-            GroupEntity groupEntity = groupRepository.getById(Long.parseLong(i + ""));
+        GroupEntity groupEntity = groupRepository.getById(1L);
 
-            UserGroupJoinDTO userGroupJoinDTO = new UserGroupJoinDTO();
-            userGroupJoinDTO.setUser(userEntity);
-            userGroupJoinDTO.setGroup(groupEntity);
-            userGroupJoinRepository.save(userGroupJoinDTO.toEntity());
-        }
+        GroupUserDTO groupUserDTO = new GroupUserDTO();
+        groupUserDTO.setUserId(1L);
+        groupUserDTO.setGroup(groupEntity);
+
+        groupUserRepository.save(groupUserDTO.toEntity());
+
+        List<UserEntity> userEntity = groupUserQueryRepository.getUserEntity(52L);
+
+        log.info("value : ");
     }
 
     @Test

@@ -34,7 +34,4 @@ public class UserEntity extends BaseTimeEntity {
     @JoinColumn(name = "profile_id")
     private UserProfileEntity profile;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<UserGroupJoinEntity> UserGroupJoin;
-
 }

@@ -3,7 +3,6 @@ package com.example.demo.dto;
 import com.example.demo.entities.GroupBoardEntity;
 import com.example.demo.entities.GroupEntity;
 import com.example.demo.entities.UserEntity;
-import com.example.demo.entities.UserGroupJoinEntity;
 import lombok.Getter;
 import lombok.Setter;
 

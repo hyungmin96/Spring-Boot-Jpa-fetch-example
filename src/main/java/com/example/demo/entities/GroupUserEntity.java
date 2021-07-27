@@ -1,9 +1,7 @@
 package com.example.demo.entities;
 
 import lombok.*;
-
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Getter
@@ -11,14 +9,12 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Table(name = "tbl_user_group_join")
-public class UserGroupJoinEntity extends BaseTimeEntity{
+public class GroupUserEntity extends BaseTimeEntity{
 
     @Id @GeneratedValue
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_table")
-    private UserEntity user;
+    private Long userId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_table")

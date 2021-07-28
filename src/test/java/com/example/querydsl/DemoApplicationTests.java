@@ -1,8 +1,10 @@
 package com.example.querydsl;
 
 import com.example.querydsl.dto.UserDTO;
+import com.example.querydsl.entities.GroupBoardEntity;
 import com.example.querydsl.entities.UserEntity;
 import com.example.querydsl.repositories.*;
+import com.querydsl.core.Tuple;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.DisplayName;
@@ -37,12 +39,10 @@ public class DemoApplicationTests {
 
         Pageable pageable = PageRequest.of(0, 10, Sort.Direction.ASC, "id");
 
-//        PageImpl<UserDTO> pageImplStaff = groupBoardQueryRepository.findByName(pageable);  // test
-
-        List<UserDTO> pageImplStaff = groupBoardQueryRepository.findDTO();
+        PageImpl<UserDTO> pageImplStaff = groupBoardQueryRepository.findByName(pageable);  // test
 
         for(UserDTO user : pageImplStaff)
-            log.info("value : " + user.getUsername());
+            log.info("value : " + user);
     }
 
 }

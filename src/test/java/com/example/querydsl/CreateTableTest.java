@@ -82,7 +82,7 @@ public class CreateTableTest {
     @Test
     void 게시글_생성(){
 
-        UserEntity userEntity = userRepository.getById(3L);
+        UserEntity userEntity = userRepository.getById(52L);
         GroupEntity groupEntity = groupRepository.getById(3L);
 
         for(int i = 0; i < 23; i ++){

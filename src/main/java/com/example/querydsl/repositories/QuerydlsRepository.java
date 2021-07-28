@@ -3,6 +3,7 @@ package com.example.querydsl.repositories;
 import com.example.querydsl.component.PagingUtil;
 import com.example.querydsl.dto.UserDTO;
 import com.example.querydsl.entities.*;
+import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -31,14 +32,20 @@ public class QuerydlsRepository{
                 .fetch();
     }
 
+    public List<UserEntity> findBoards() {
+        return queryFactory
+                .select(userEntity)
+                .from(groupBoardEntity)
+                .leftJoin(userEntity).on(userEntity.id.eq(52L))
+                .fetchJoin()
+                .fetch();
+    }
+
     public PageImpl<UserDTO> findByName(Pageable page) {
-        JPAQuery<UserDTO> query = queryFactory.from(userEntity)
-                .select(Projections.fields(UserDTO.class,
-                        userEntity.id,
-                        userEntity.username)
-                );
+        JPAQuery<UserDTO> query = queryFactory
+                .select(Projections.fields(UserDTO.class, groupBoardEntity.id, groupBoardEntity.user.username))
+                .from(groupBoardEntity);
 
-
-        return pagingUtil.getPageImpl(page, query, UserDTO.class);
+        return pagingUtil.getPageImpl(page, query, GroupBoardEntity.class);
     }
 }
